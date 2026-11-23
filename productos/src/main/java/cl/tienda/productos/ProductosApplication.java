@@ -1,4 +1,4 @@
-package cl.volcan.Productos;
+package cl.tienda.productos;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
