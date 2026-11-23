@@ -14,3 +14,4 @@ public class CifradoConfig {
         return new BCryptPasswordEncoder();
     }
 }
+    
