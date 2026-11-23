@@ -32,12 +32,22 @@ public class ProductoService {
     public Producto guardar(Producto producto) {
         // Asegura que se cree un registro nuevo.
         producto.setId(null);
+        producto.setCodigo(producto.getCodigo().trim().toUpperCase());
+        if (repository.existsByCodigoIgnoreCase(producto.getCodigo())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Ya existe un producto con el código " + producto.getCodigo());
+        }
         return repository.save(producto);
     }
 
     public Producto actualizar(Long id, Producto datos) {
         Producto producto = obtener(id);
-        producto.setCodigo(datos.getCodigo());
+        String codigo = datos.getCodigo().trim().toUpperCase();
+        if (repository.existsByCodigoIgnoreCaseAndIdNot(codigo, id)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                    "Ya existe un producto con el código " + codigo);
+        }
+        producto.setCodigo(codigo);
         producto.setNombre(datos.getNombre());
         producto.setCategoria(datos.getCategoria());
         producto.setStock(datos.getStock());
